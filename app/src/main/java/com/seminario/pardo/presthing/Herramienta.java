@@ -9,6 +9,7 @@ public class Herramienta {
     private String nombre_herramienta;
     private String desc_herramienta;
     private byte [] img_herramienta;
+
     private int estado; //Agregado
 
     public Herramienta(byte[] img_herramienta, int id, String nombre_herramienta, String desc_herramienta, int estado) {
