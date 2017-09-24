@@ -63,7 +63,7 @@ public class ListaHerramienta extends AppCompatActivity {
             String descripcion_herramienta = cursor.getString(2);
             byte [] imagen_herramienta = cursor.getBlob(3);
 
-            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta));
+            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta,0));
         }
         adapter.notifyDataSetChanged();
 
@@ -82,7 +82,7 @@ public class ListaHerramienta extends AppCompatActivity {
                             //El actualizar
                             //Toast.makeText(getApplicationContext(), "Actualizar..", Toast.LENGTH_SHORT).show();
                             Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
-                            ArrayList<Integer> arrID = new ArrayList<Integer>();
+                            ArrayList<Integer> arrID = new ArrayList<>();
 
                             while(c.moveToNext()){
                                 arrID.add(c.getInt(0));
@@ -95,7 +95,7 @@ public class ListaHerramienta extends AppCompatActivity {
                             //El borrar
                             //Toast.makeText(getApplicationContext(), "Borrar..", Toast.LENGTH_SHORT).show();
                             Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
-                            ArrayList<Integer> arrID = new ArrayList<Integer>();
+                            ArrayList<Integer> arrID = new ArrayList<>();
 
                             while(c.moveToNext()){
                                 arrID.add(c.getInt(0));
@@ -235,7 +235,7 @@ public class ListaHerramienta extends AppCompatActivity {
             String descripcion_herramienta = cursor.getString(2);
             byte [] imagen_herramienta = cursor.getBlob(3);
 
-            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta));
+            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta, 0));
         }
         adapter.notifyDataSetChanged();
 

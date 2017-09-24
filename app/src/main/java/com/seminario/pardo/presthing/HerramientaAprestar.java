@@ -19,31 +19,41 @@ public class HerramientaAprestar extends AppCompatActivity {
     private Button elegir_contacto, prestar;
     private TextView nombre_contacto, nombre_herramienta;
     private CalendarView fechaHasta;
+    public static SQLiteHelper sqLiteHelper;//Agregado
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SELECT_CONTACT && resultCode == RESULT_OK) {
             Uri contactUri = data.getData();
-            // Do something with the selected contact at contactUri
+            // Contacto seleccionado
            // Toast.makeText(HerramientaAprestar.this, "Hacer algo", Toast.LENGTH_SHORT).show();
             //Agregado
             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
             Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
-            // If the cursor returned is valid, get the name
+
             if (cursor != null && cursor.moveToFirst()) {
                 int numberIndex = cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME);
                 String nombreContacto = cursor.getString(numberIndex);
                 Toast.makeText(HerramientaAprestar.this, nombreContacto, Toast.LENGTH_SHORT).show();
                 nombre_contacto.setText(nombreContacto);
-                // Do something with the phone number
+                // Hacer algo con el contacto
                 //Fin Agregado
             }
+
         }
     }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_herramienta_aprestar);
+
+        //Agregado
+        sqLiteHelper = new SQLiteHelper(this, "HerramientasAcontactosDB.sqlite", null, 1);
+        sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS HERRAMIENTASACONTACTOS" +
+                "(id_prestamo INTEGER PRIMARY KEY AUTOINCREMENT, id_herramienta INTEGER, " +
+                "id_contacto INTEGER, fecha_hasta DATE)");
+        //Fin agregado
+
         nombre_contacto = (TextView) findViewById(R.id.nombre_contacto);
         nombre_herramienta = (TextView) findViewById(R.id.nombre_herramienta);
 

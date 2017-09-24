@@ -9,13 +9,21 @@ public class Herramienta {
     private String nombre_herramienta;
     private String desc_herramienta;
     private byte [] img_herramienta;
+    private int estado; //Agregado
 
-    public Herramienta(byte[] img_herramienta, int id, String nombre_herramienta, String desc_herramienta) {
+    public Herramienta(byte[] img_herramienta, int id, String nombre_herramienta, String desc_herramienta, int estado) {
         this.img_herramienta = img_herramienta;
         this.id = id;
         this.nombre_herramienta = nombre_herramienta;
         this.desc_herramienta = desc_herramienta;
+        this.estado = estado; //Agregado para cuando este prestado y setear internamente
     }
+
+    //Agregado
+    public void setEstado(int estado){this.estado=estado;}
+
+    public int getEstado(){return estado;}
+    //Fin agregado
 
     public int getId() {
         return id;

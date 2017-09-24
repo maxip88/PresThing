@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
         sqLiteHelper = new SQLiteHelper(this, "HerramientasDB.sqlite", null, 1);
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS HERRAMIENTAS" +
                 "(id_herramienta INTEGER PRIMARY KEY AUTOINCREMENT, nombre_herramienta VARCHAR," +
-                " descripcion_herramienta VARCHAR, imagen_herramienta BLOB)");
+                " descripcion_herramienta VARCHAR, imagen_herramienta BLOB, estado INTEGER)");
 
         elegir_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,8 +61,8 @@ public class MainActivity extends AppCompatActivity {
                     sqLiteHelper.insertData(
                             nombre_herramienta.getText().toString().trim(),
                             desc_herramienta.getText().toString().trim(),
-                            imageViewToByte(img_herramienta)
-                    );
+                            imageViewToByte(img_herramienta), 0
+                    ); //0 No esta prestado
                     Toast.makeText(getApplicationContext(), "Agregado OK", Toast.LENGTH_SHORT).show();
                     nombre_herramienta.setText("");
                     desc_herramienta.setText("");
@@ -122,9 +122,6 @@ public class MainActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-
-
-
 
         super.onActivityResult(requestCode, resultCode, data);
     }
