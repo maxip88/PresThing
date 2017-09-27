@@ -62,8 +62,9 @@ public class ListaHerramienta extends AppCompatActivity {
             String nombre_herramienta = cursor.getString(1);
             String descripcion_herramienta = cursor.getString(2);
             byte [] imagen_herramienta = cursor.getBlob(3);
+            int estado = cursor.getInt(4); //Agregado
 
-            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta,0));
+            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta, estado));
         }
         adapter.notifyDataSetChanged();
 
@@ -71,7 +72,7 @@ public class ListaHerramienta extends AppCompatActivity {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
-                CharSequence[] items = {"Actualizar", "Borrar"}; //Agregar el prestar luego
+                CharSequence[] items = {"Actualizar", "Borrar"};
                 AlertDialog.Builder dialog = new AlertDialog.Builder(ListaHerramienta.this);
                 dialog.setTitle("Elija una opcion");
 

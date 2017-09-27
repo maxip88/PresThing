@@ -61,7 +61,8 @@ public class MainActivity extends AppCompatActivity {
                     sqLiteHelper.insertData(
                             nombre_herramienta.getText().toString().trim(),
                             desc_herramienta.getText().toString().trim(),
-                            imageViewToByte(img_herramienta), 0
+                            imageViewToByte(img_herramienta),
+                            0
                     ); //0 No esta prestado
                     Toast.makeText(getApplicationContext(), "Agregado OK", Toast.LENGTH_SHORT).show();
                     nombre_herramienta.setText("");
