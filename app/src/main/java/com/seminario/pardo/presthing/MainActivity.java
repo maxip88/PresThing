@@ -35,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
         init();
-
         sqLiteHelper = new SQLiteHelper(this, "HerramientasDB.sqlite", null, 1);
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS HERRAMIENTAS" +
                 "(id_herramienta INTEGER PRIMARY KEY AUTOINCREMENT, nombre_herramienta VARCHAR," +
@@ -134,6 +132,5 @@ public class MainActivity extends AppCompatActivity {
         elegir_img = (Button) findViewById(R.id.button_img);
         listar = (Button) findViewById(R.id.button_listar);
         agregar_herramienta = (Button) findViewById(R.id.button_agregar);
-
     }
 }

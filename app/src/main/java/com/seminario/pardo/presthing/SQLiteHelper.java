@@ -76,6 +76,18 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         return database.rawQuery(sql, null);
     }
 
+    //Agregado para que devuelva nombre de herramienta
+    public Cursor getDatAdic (String sql, int position){
+
+        SQLiteDatabase database = getWritableDatabase();
+        SQLiteStatement statement = database.compileStatement(sql);
+
+        statement.clearBindings();
+        statement.bindDouble(1, (double) position);
+
+        return database.rawQuery(sql, null);
+    }
+
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 

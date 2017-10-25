@@ -7,6 +7,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -40,7 +42,6 @@ public class ListaHerramienta extends AppCompatActivity {
     AdaptadorListaHerramienta adapter = null;
     final int REQUEST_CODE_GALLERY = 888;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,7 +54,6 @@ public class ListaHerramienta extends AppCompatActivity {
         gridView.setAdapter(adapter);
 
         //Get all de la base de datos
-
         Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT * FROM HERRAMIENTAS");
         lista.clear();
 
@@ -91,7 +91,6 @@ public class ListaHerramienta extends AppCompatActivity {
 
                             showDialogUpdate(ListaHerramienta.this, arrID.get(position)); //OJO
 
-
                         } else {
                             //El borrar
                             //Toast.makeText(getApplicationContext(), "Borrar..", Toast.LENGTH_SHORT).show();
@@ -110,33 +109,29 @@ public class ListaHerramienta extends AppCompatActivity {
             }
         });
 
-        //PRUEBAS
-
         gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
-                Intent herramAprestar = new Intent(ListaHerramienta.this, HerramientaAprestar.class);
 
-                TextView nom_herram = (TextView) findViewById(R.id.nom_herram);
-                String nombreHerram = nom_herram.getText().toString();
+                Intent herramAprestar = new Intent(ListaHerramienta.this, Alarma.class); //Cambiado en vez de HerramientaAprestar
 
-                herramAprestar.putExtra("nom_herram", nombreHerram);
-                herramAprestar.putExtra("id_herram", position);
+                Cursor c = MainActivity.sqLiteHelper.getData("SELECT nombre_herramienta FROM HERRAMIENTAS");
+                ArrayList<String> arrNom = new ArrayList<>();
+
+                while(c.moveToNext()){
+                    arrNom.add(c.getString(0));
+                }
+                 String nombreHerram = (arrNom.get(position));
+
+                Toast.makeText(ListaHerramienta.this, "El elemento seleccionado es: " + nombreHerram , Toast.LENGTH_LONG).show();
+
+                herramAprestar.putExtra("nombre_herramienta", nombreHerram);//Probar
+
                 startActivity(herramAprestar);
             }
         });
 
-
-
-
     }
-    //Metodo para pasar los datos a la otra activity
-    public void pasarDatos(Bundle pasar){
-
-        //pasar.putString("nombre_herramienta", );
-    }
-
-    //FIN PRUEBAS
 
     ImageView imageView_herramienta;
     private void showDialogUpdate(Activity activity, final int position){

@@ -22,7 +22,20 @@
             android:name=".ListaHerramienta"
             android:label="Lista Herramienta"
             android:parentActivityName=".MainActivity" />
-        <activity android:name=".HerramientaAprestar"></activity>
+        <activity android:name=".Alarma">
+
+
+        </activity>
+
+        <receiver
+            android:name=".MyAlarmReceiver"
+            android:process=":remote" />
+
+        <service
+            android:name=".MyTestService"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>
