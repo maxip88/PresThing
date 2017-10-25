@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_alarma"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.seminario.pardo.presthing.Alarma"
+    android:orientation="vertical">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/text_nomHerram"
+        android:hint="Titulo" />
+
+    <Button
+        android:text="Seleccionar contacto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_elegirCont" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/text_contacto"
+        android:hint="Contacto" />
+
+    <Button
+        android:text="Seleccione la fecha"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_fecha" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/text_fecha"
+        android:hint="Fecha" />
+
+    <Button
+        android:text="Seleccione la hora"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_hora" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/text_hora"
+        android:hint="Hora" />
+
+    <Button
+        android:text="Guardar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_alarma"
+        android:onClick="llenar111" />
+
+    <TimePicker
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:id="@+id/timePicker"
+        android:visibility="invisible" />
+
+    <DatePicker
+        android:layout_width="match_parent"
+        android:layout_height="82dp"
+        android:id="@+id/datePicker"
+        android:visibility="invisible" />
+
+</LinearLayout>
