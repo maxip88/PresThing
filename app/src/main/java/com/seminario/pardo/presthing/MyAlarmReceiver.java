@@ -36,7 +36,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         context.startService(i);
         Calendar calendario = Calendar.getInstance();
         int hora, min,dia,mes,ano;
-        String cadenaF, cadenaH,fecha_sistema,hora_sistema;
+        String fecha_sistema,hora_sistema;
 
         dia = calendario.get(Calendar.DAY_OF_MONTH);
         mes = calendario.get(Calendar.MONTH)+1;
