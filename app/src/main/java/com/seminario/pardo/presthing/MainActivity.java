@@ -1,6 +1,7 @@
 package com.seminario.pardo.presthing;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -8,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.Image;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
@@ -27,8 +29,10 @@ public class MainActivity extends AppCompatActivity {
 
     EditText nombre_herramienta, desc_herramienta;
     ImageView img_herramienta;
-    Button elegir_img, listar, agregar_herramienta;
+    Bitmap bmp;
+    Button elegir_img, listar, agregar_herramienta, activar_camara;
     final int REQUEST_CODE_GALLERY = 999;
+    final int PHOTO_CODE = 200;
     public static SQLiteHelper sqLiteHelper;
 
     @Override
@@ -50,6 +54,18 @@ public class MainActivity extends AppCompatActivity {
                         REQUEST_CODE_GALLERY);
             }
         });
+
+        //Metodo que llamara a la camara
+        activar_camara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, PHOTO_CODE);
+
+            }
+        });
+
 
         agregar_herramienta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -111,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null){
+        if(requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null){ //Linea agregada para camara
             Uri uri = data.getData();
             try {
                 InputStream inputStream = getContentResolver().openInputStream(uri);
@@ -120,8 +136,11 @@ public class MainActivity extends AppCompatActivity {
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
+        } else if(requestCode == PHOTO_CODE && resultCode == RESULT_OK){
+            Bundle ext = data.getExtras();
+            bmp = (Bitmap) ext.get("data");
+            img_herramienta.setImageBitmap(bmp);
         }
-
         super.onActivityResult(requestCode, resultCode, data);
     }
 
@@ -130,7 +149,10 @@ public class MainActivity extends AppCompatActivity {
         desc_herramienta = (EditText) findViewById(R.id.text_desc);
         img_herramienta = (ImageView) findViewById(R.id.img_herramienta);
         elegir_img = (Button) findViewById(R.id.button_img);
+        activar_camara = (Button) findViewById(R.id.button_camara);
         listar = (Button) findViewById(R.id.button_listar);
         agregar_herramienta = (Button) findViewById(R.id.button_agregar);
     }
+
+
 }
