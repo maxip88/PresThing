@@ -7,11 +7,10 @@
 
 
     <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         app:srcCompat="@mipmap/ic_launcher"
         android:id="@+id/imageView_herramienta"
-        android:layout_marginTop="63dp"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true" />
 
@@ -19,13 +18,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/nombre_herramienta"
-        android:layout_centerVertical="true"
+        android:hint="Nombre"
+        android:layout_below="@+id/imageView_herramienta"
         android:layout_centerHorizontal="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentLeft="true"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentStart="true"
-        android:hint="Nombre" />
+        android:layout_alignParentStart="true" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -44,7 +41,18 @@
         android:layout_height="wrap_content"
         android:text="Actualizar"
         android:id="@+id/button_actualizar"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="65dp" />
+        android:layout_below="@+id/estado_herramienta"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Prestado"
+        android:id="@+id/estado_herramienta"
+        android:layout_marginTop="48dp"
+        android:layout_below="@+id/descripcion_herramienta"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true" />
+
 </RelativeLayout>

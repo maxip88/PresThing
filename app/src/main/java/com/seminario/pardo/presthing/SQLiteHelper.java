@@ -40,17 +40,19 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     }
 
-    public void upgradeData(String nombre_herramienta, String descripcion_herramienta, byte [] image, int id_herramienta){
+    public void upgradeData(String nombre_herramienta, String descripcion_herramienta, byte [] image, int id_herramienta, int estado_herramienta){
 
         SQLiteDatabase database = getWritableDatabase();
         String sql = "UPDATE HERRAMIENTAS SET nombre_herramienta = ?, descripcion_herramienta = ?," +
-                "imagen_herramienta = ? WHERE id_herramienta = ?";
+                "imagen_herramienta = ?, estado = ? WHERE id_herramienta = ?";
 
         SQLiteStatement statement = database.compileStatement(sql);
         statement.bindString(1, nombre_herramienta);
         statement.bindString(2, descripcion_herramienta);
         statement.bindBlob(3, image);
-        statement.bindDouble(4, (double)id_herramienta);
+        statement.bindDouble(4, (double) estado_herramienta); //Agregado
+        statement.bindDouble(5, (double)id_herramienta);
+
 
         statement.execute();
         database.close();

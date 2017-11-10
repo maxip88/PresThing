@@ -11,20 +11,26 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Layout;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -40,7 +46,9 @@ public class ListaHerramienta extends AppCompatActivity {
     GridView gridView;
     ArrayList<Herramienta> lista;
     AdaptadorListaHerramienta adapter = null;
-    final int REQUEST_CODE_GALLERY = 888;
+    //final int REQUEST_CODE_GALLERY = 888;
+    final int PHOTO_CODE = 200;
+    Bitmap bmp;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,6 +56,7 @@ public class ListaHerramienta extends AppCompatActivity {
         setContentView(R.layout.activity_lista_herramienta);
 
         gridView = (GridView) findViewById(R.id.gridView);
+
         lista = new ArrayList<>();
         adapter = new AdaptadorListaHerramienta(this, R.layout.herramienta_items, lista);
 
@@ -82,18 +91,29 @@ public class ListaHerramienta extends AppCompatActivity {
                         if(item==0){
                             //El actualizar
                             //Toast.makeText(getApplicationContext(), "Actualizar..", Toast.LENGTH_SHORT).show();
-                            Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
+                            //Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
+                            Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta, nombre_herramienta, descripcion_herramienta, estado FROM HERRAMIENTAS");
                             ArrayList<Integer> arrID = new ArrayList<>();
+                            //
+                            ArrayList<String> arrNom = new ArrayList<>();
+                            ArrayList<String> arrDesc = new ArrayList<>();
+                            ArrayList<Integer> arrEst = new ArrayList<>();
+                            //
 
                             while(c.moveToNext()){
                                 arrID.add(c.getInt(0));
+
+                                //
+                                arrNom.add(c.getString(1));
+                                arrDesc.add(c.getString(2));
+                                arrEst.add(c.getInt(3));
+                                //
                             }
 
-                            showDialogUpdate(ListaHerramienta.this, arrID.get(position)); //OJO
+                            showDialogUpdate(ListaHerramienta.this, arrID.get(position), arrNom.get(position), arrDesc.get(position), arrEst.get(position)); //OJO
 
                         } else {
                             //El borrar
-                            //Toast.makeText(getApplicationContext(), "Borrar..", Toast.LENGTH_SHORT).show();
                             Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
                             ArrayList<Integer> arrID = new ArrayList<>();
 
@@ -133,8 +153,9 @@ public class ListaHerramienta extends AppCompatActivity {
 
     }
 
+
     ImageView imageView_herramienta;
-    private void showDialogUpdate(Activity activity, final int position){
+    private void showDialogUpdate(Activity activity, final int position, final String nomHerr, final String descHerr, final int estado_herram){ //Le saque el final
 
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.update_herramienta_activity);
@@ -143,37 +164,70 @@ public class ListaHerramienta extends AppCompatActivity {
         imageView_herramienta = (ImageView) dialog.findViewById(R.id.imageView_herramienta);
         final EditText nombre_herramienta = (EditText) dialog.findViewById(R.id.nombre_herramienta);
         final EditText descripcion_herramienta = (EditText) dialog.findViewById(R.id.descripcion_herramienta);
+        final CheckBox estado_herramienta = (CheckBox) dialog.findViewById(R.id.estado_herramienta); //Agregado
         Button actualizar_herramienta = (Button) dialog.findViewById(R.id.button_actualizar);
 
+        nombre_herramienta.setText(nomHerr);
+        descripcion_herramienta.setText(descHerr);
+        if (estado_herram == 0){
+            estado_herramienta.setChecked(false);
+
+        } else {
+            estado_herramienta.setChecked(true);
+        }
+
         //Seteo width con el dialog
-        int width = (int) (activity.getResources().getDisplayMetrics().widthPixels * 0.95);
+        int width = (int) (activity.getResources().getDisplayMetrics().widthPixels * 0.95); //0.95
         //Seteo height con el dialog
-        int height = (int) (activity.getResources().getDisplayMetrics().heightPixels * 0.7);
+        int height = (int) (activity.getResources().getDisplayMetrics().heightPixels * 0.7); //0.7
 
         dialog.getWindow().setLayout(width,height);
         dialog.show();
 
-        imageView_herramienta.setOnClickListener(new View.OnClickListener() {
+       /* imageView_herramienta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //Request para la foto de la libreria
                 ActivityCompat.requestPermissions(
                         ListaHerramienta.this,
-                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        REQUEST_CODE_GALLERY);
+                       // new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        new String[]{Manifest.permission.CAMERA},
+                        PHOTO_CODE);
+                       // REQUEST_CODE_GALLERY);
+            }
+        });*/
+
+        imageView_herramienta.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                startActivityForResult(intent, PHOTO_CODE);
+
             }
         });
 
         actualizar_herramienta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final int estado; //AgregadoUltimo
+
+                if (estado_herramienta.isChecked()){
+                    estado = 1;
+                }
+
+                 else {
+                    estado = 0;
+                     }
+                //Fin agregado ultimo
                 try {
 
                     MainActivity.sqLiteHelper.upgradeData(
                             nombre_herramienta.getText().toString().trim(),
                             descripcion_herramienta.getText().toString().trim(),
                             MainActivity.imageViewToByte(imageView_herramienta),
-                            position
+                            position,
+                            estado//Agregado
                     );
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Actualizado correctamente..", Toast.LENGTH_SHORT).show();
@@ -219,9 +273,7 @@ public class ListaHerramienta extends AppCompatActivity {
     }
 
     private void updateListaHerramienta(){
-
         //Get all de la base de datos
-
         Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT * FROM HERRAMIENTAS");
         lista.clear();
 
@@ -230,13 +282,13 @@ public class ListaHerramienta extends AppCompatActivity {
             String nombre_herramienta = cursor.getString(1);
             String descripcion_herramienta = cursor.getString(2);
             byte [] imagen_herramienta = cursor.getBlob(3);
+            int estado = cursor.getInt(4);
 
-            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta, 0));
+            lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta, estado));
         }
         adapter.notifyDataSetChanged();
-
     }
-
+/*
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode==REQUEST_CODE_GALLERY){
@@ -252,7 +304,7 @@ public class ListaHerramienta extends AppCompatActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
-
+/*
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -268,4 +320,24 @@ public class ListaHerramienta extends AppCompatActivity {
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
+
+    */
+
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
+    if(requestCode == PHOTO_CODE && resultCode == RESULT_OK){
+
+        try {
+            Bundle ext = data.getExtras();
+            bmp = (Bitmap) ext.get("data");
+            imageView_herramienta.setImageBitmap(bmp);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    super.onActivityResult(requestCode, resultCode, data);
+    }
+
 }

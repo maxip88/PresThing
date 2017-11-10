@@ -12,6 +12,7 @@ import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     final int REQUEST_CODE_GALLERY = 999;
     final int PHOTO_CODE = 200;
     public static SQLiteHelper sqLiteHelper;
+    //int permissionCheck2;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         sqLiteHelper.queryData("CREATE TABLE IF NOT EXISTS HERRAMIENTAS" +
                 "(id_herramienta INTEGER PRIMARY KEY AUTOINCREMENT, nombre_herramienta VARCHAR," +
                 " descripcion_herramienta VARCHAR, imagen_herramienta BLOB, estado INTEGER)");
+
 
         elegir_img.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,11 +69,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+/*
+        activar_camara.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ActivityCompat.requestPermissions(
+                        MainActivity.this,
+                        new String[]{Manifest.permission.CAMERA},
+                        PHOTO_CODE);
+            }
+        });
 
-
+*/
         agregar_herramienta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 try {
 
                     sqLiteHelper.insertData(
@@ -108,6 +123,8 @@ public class MainActivity extends AppCompatActivity {
         return byteArray;
     }
 
+
+
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if(requestCode==REQUEST_CODE_GALLERY){
@@ -123,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -152,7 +170,8 @@ public class MainActivity extends AppCompatActivity {
         activar_camara = (Button) findViewById(R.id.button_camara);
         listar = (Button) findViewById(R.id.button_listar);
         agregar_herramienta = (Button) findViewById(R.id.button_agregar);
-    }
+        //permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
 
+    }
 
 }
