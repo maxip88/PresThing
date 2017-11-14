@@ -62,7 +62,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     }
 
     private void triggerNotification(Context contexto, String t) {
-        Intent notificationIntent = new Intent(contexto, MainActivity.class);
+        Intent notificationIntent = new Intent(contexto, ListaHerramienta.class); //Cambie MainActivity por ListaHerramienta
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(contexto, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
         Uri defaultSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);

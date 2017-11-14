@@ -91,17 +91,15 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     //TABLA DE PRESTAMOS
 
-    public void insertPrestamo(int id_herramienta, int id_contacto, Date fecha_hasta){
+    public void upgradeEstado(int id_herramienta){
 
         SQLiteDatabase database = getWritableDatabase();
-        String sql = "INSERT INTO HERRAMIENTASACONTACTOS VALUES (NULL, ?, ?, ?)";
+        String sql = "UPDATE HERRAMIENTAS SET estado = 1 WHERE id_herramienta = ?";
 
         SQLiteStatement statement = database.compileStatement(sql);
         statement.clearBindings();
 
         statement.bindDouble(1, (double)id_herramienta);
-        statement.bindDouble(2, (double)id_contacto);
-        statement.bindLong(3, fecha_hasta.getTime());
         statement.executeInsert();
 
         }

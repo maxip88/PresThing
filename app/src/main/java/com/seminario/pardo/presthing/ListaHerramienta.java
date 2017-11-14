@@ -135,17 +135,24 @@ public class ListaHerramienta extends AppCompatActivity {
 
                 Intent herramAprestar = new Intent(ListaHerramienta.this, Alarma.class); //Cambiado en vez de HerramientaAprestar
 
-                Cursor c = MainActivity.sqLiteHelper.getData("SELECT nombre_herramienta FROM HERRAMIENTAS");
+               // Cursor c = MainActivity.sqLiteHelper.getData("SELECT nombre_herramienta FROM HERRAMIENTAS");
+                Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta, nombre_herramienta FROM HERRAMIENTAS");
+                ArrayList<Integer> arrID = new ArrayList<>();
+
                 ArrayList<String> arrNom = new ArrayList<>();
 
                 while(c.moveToNext()){
-                    arrNom.add(c.getString(0));
+                    arrID.add(c.getInt(0));
+                    arrNom.add(c.getString(1));
                 }
-                 String nombreHerram = (arrNom.get(position));
 
-                Toast.makeText(ListaHerramienta.this, "El elemento seleccionado es: " + nombreHerram , Toast.LENGTH_LONG).show();
+                 int idHerram = (arrID.get(position));
+                String nombreHerram = (arrNom.get(position));
 
+                //Toast.makeText(ListaHerramienta.this, "El elemento seleccionado es: " + nombreHerram , Toast.LENGTH_LONG).show();
+                Toast.makeText(ListaHerramienta.this, "El elemento seleccionado es: " + nombreHerram + " ID: " + idHerram, Toast.LENGTH_LONG).show();
                 herramAprestar.putExtra("nombre_herramienta", nombreHerram);//Probar
+                herramAprestar.putExtra("id_herramienta", idHerram);//Probar
 
                 startActivity(herramAprestar);
             }

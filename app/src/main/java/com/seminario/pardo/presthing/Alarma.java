@@ -50,7 +50,8 @@ public class Alarma extends AppCompatActivity {
     private int hour;
 
     private TimePicker timePicker;
-    private TextView textViewTime;
+    private TextView textViewTime, text_idHerram;
+    private int estadoActualizar;
     private Button button;
     private static final int TIME_DIALOG_ID = 998;
     Calendar calendario = Calendar.getInstance();
@@ -95,6 +96,7 @@ public class Alarma extends AppCompatActivity {
         addListenerOnButton();
         // hora
         setCurrentTimeOnView();
+        text_idHerram = (TextView) findViewById(R.id.text_idHerram);
         t3 = (EditText) findViewById(R.id.text_nomHerram);
         t5= (EditText) findViewById(R.id.text_contacto);
         t6= (EditText) findViewById(R.id.text_fecha);
@@ -105,6 +107,9 @@ public class Alarma extends AppCompatActivity {
 
         if(datos != null){
             String nombreHerram = datos.getString("nombre_herramienta");
+            int idHerram = datos.getInt("id_herramienta");
+            String id = Integer.toString(idHerram);
+            text_idHerram.setText(id);
             t3.setText(nombreHerram);
         }
         //Inicio el servicio
@@ -149,6 +154,10 @@ public class Alarma extends AppCompatActivity {
         t5.setText("");
         t6.setText("");
         t7.setText("");
+
+        estadoActualizar = Integer.parseInt(text_idHerram.getText().toString());
+        MainActivity.sqLiteHelper.upgradeEstado(estadoActualizar);
+
         Toast.makeText(this, "Alarma registrada", Toast.LENGTH_LONG).show();
     }
     //Agregado para crear evento
