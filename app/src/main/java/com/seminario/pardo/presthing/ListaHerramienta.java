@@ -36,6 +36,7 @@ import android.widget.Toast;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.sql.Blob;
 import java.util.ArrayList;
 
 /**
@@ -92,26 +93,31 @@ public class ListaHerramienta extends AppCompatActivity {
                             //El actualizar
                             //Toast.makeText(getApplicationContext(), "Actualizar..", Toast.LENGTH_SHORT).show();
                             //Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
-                            Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta, nombre_herramienta, descripcion_herramienta, estado FROM HERRAMIENTAS");
+                            //Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta, nombre_herramienta, descripcion_herramienta, estado FROM HERRAMIENTAS");
+                            Cursor c = MainActivity.sqLiteHelper.getData("SELECT * FROM HERRAMIENTAS");
+
                             ArrayList<Integer> arrID = new ArrayList<>();
                             //
                             ArrayList<String> arrNom = new ArrayList<>();
                             ArrayList<String> arrDesc = new ArrayList<>();
                             ArrayList<Integer> arrEst = new ArrayList<>();
                             //
+                            ArrayList<byte[]> arrImg = new ArrayList<>();
+                            //
 
                             while(c.moveToNext()){
                                 arrID.add(c.getInt(0));
-
                                 //
                                 arrNom.add(c.getString(1));
                                 arrDesc.add(c.getString(2));
-                                arrEst.add(c.getInt(3));
+                                arrImg.add(c.getBlob(3));
+                                arrEst.add(c.getInt(4));
                                 //
+
                             }
 
-                            showDialogUpdate(ListaHerramienta.this, arrID.get(position), arrNom.get(position), arrDesc.get(position), arrEst.get(position)); //OJO
-
+                           // showDialogUpdate(ListaHerramienta.this, arrID.get(position), arrNom.get(position), arrDesc.get(position), arrEst.get(position)); //OJO
+                            showDialogUpdate(ListaHerramienta.this, arrID.get(position), arrNom.get(position), arrDesc.get(position), arrEst.get(position), arrImg.get(position));
                         } else {
                             //El borrar
                             Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
@@ -162,7 +168,7 @@ public class ListaHerramienta extends AppCompatActivity {
 
 
     ImageView imageView_herramienta;
-    private void showDialogUpdate(Activity activity, final int position, final String nomHerr, final String descHerr, final int estado_herram){ //Le saque el final
+    private void showDialogUpdate(Activity activity, final int position, final String nomHerr, final String descHerr, final int estado_herram, byte[] img_herram){ //Le saque el final
 
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.update_herramienta_activity);
@@ -182,6 +188,8 @@ public class ListaHerramienta extends AppCompatActivity {
         } else {
             estado_herramienta.setChecked(true);
         }
+        Bitmap bitmap = BitmapFactory.decodeByteArray(img_herram, 0, img_herram.length);
+        imageView_herramienta.setImageBitmap(bitmap);
 
         //Seteo width con el dialog
         int width = (int) (activity.getResources().getDisplayMetrics().widthPixels * 0.95); //0.95
