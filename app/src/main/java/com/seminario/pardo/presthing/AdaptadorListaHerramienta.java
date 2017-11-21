@@ -3,6 +3,7 @@ package com.seminario.pardo.presthing;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,7 +45,7 @@ public class AdaptadorListaHerramienta extends BaseAdapter {
 
     private class ViewHolder {
         ImageView img_herram;
-        TextView nom_herram, desc_herram;
+        TextView nom_herram, desc_herram, est_herram;
     }
 
     @Override
@@ -61,6 +62,8 @@ public class AdaptadorListaHerramienta extends BaseAdapter {
             holder.desc_herram = (TextView) row.findViewById(R.id.desc_herram);
             holder.img_herram = (ImageView) row.findViewById(R.id.img_herram);
 
+            holder.est_herram = (TextView) row.findViewById(R.id.desc_estado);
+
             row.setTag(holder);
         }
         else {
@@ -76,6 +79,17 @@ public class AdaptadorListaHerramienta extends BaseAdapter {
         Bitmap bitmap = BitmapFactory.decodeByteArray(imgHerram, 0, imgHerram.length);
 
         holder.img_herram.setImageBitmap(bitmap);
+
+        int estado = (herramienta.getEstado());
+
+        if (estado == 0) {
+            holder.est_herram.setText("Disponible");
+            row.setBackgroundColor(Color.GREEN);
+        }
+        else {
+            holder.est_herram.setText("Prestado");
+            row.setBackgroundColor(Color.RED);
+        }
 
         return row;
     }

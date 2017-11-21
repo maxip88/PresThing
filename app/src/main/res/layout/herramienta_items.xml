@@ -33,4 +33,11 @@
         android:textSize="15sp"
         android:layout_below="@+id/nom_herram"
         android:layout_alignParentStart="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/desc_estado"
+        android:layout_below="@+id/desc_herram"
+        android:layout_alignParentStart="true" />
 </RelativeLayout>
