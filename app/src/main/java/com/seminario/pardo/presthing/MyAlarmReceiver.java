@@ -3,6 +3,7 @@ package com.seminario.pardo.presthing;
 /**
  * Created by Maxi on 12/10/2017.
  */
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -61,6 +62,7 @@ public class MyAlarmReceiver extends BroadcastReceiver {
     }
 
     private void triggerNotification(Context contexto, String t) {
+
         Intent notificationIntent = new Intent(contexto, MainActivity.class);
         notificationIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent contentIntent = PendingIntent.getActivity(contexto, 0, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);

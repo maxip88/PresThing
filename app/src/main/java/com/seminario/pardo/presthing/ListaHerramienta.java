@@ -71,7 +71,7 @@ public class ListaHerramienta extends AppCompatActivity {
             String nombre_herramienta = cursor.getString(1);
             String descripcion_herramienta = cursor.getString(2);
             byte [] imagen_herramienta = cursor.getBlob(3);
-            int estado = cursor.getInt(4); //Agregado
+            int estado = cursor.getInt(4);
 
             lista.add(new Herramienta(imagen_herramienta, id_herramienta, nombre_herramienta, descripcion_herramienta, estado));
         }
@@ -89,7 +89,6 @@ public class ListaHerramienta extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int item) {
                         if(item==0){
-                            //El actualizar
 
                             Cursor c = MainActivity.sqLiteHelper.getData("SELECT * FROM HERRAMIENTAS");
 
@@ -109,7 +108,6 @@ public class ListaHerramienta extends AppCompatActivity {
 
                             showDialogUpdate(ListaHerramienta.this, arrID.get(position), arrNom.get(position), arrDesc.get(position), arrEst.get(position), arrImg.get(position));
                         } else {
-                            //El borrar
                             Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
                             ArrayList<Integer> arrID = new ArrayList<>();
 

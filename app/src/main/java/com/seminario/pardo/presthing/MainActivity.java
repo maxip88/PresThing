@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        if(requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null){ //Linea agregada para camara
+        if(requestCode == REQUEST_CODE_GALLERY && resultCode == RESULT_OK && data != null){
             Uri uri = data.getData();
             try {
                 InputStream inputStream = getContentResolver().openInputStream(uri);
