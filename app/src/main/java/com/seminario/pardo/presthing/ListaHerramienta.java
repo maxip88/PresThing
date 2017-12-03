@@ -63,7 +63,6 @@ public class ListaHerramienta extends AppCompatActivity {
 
         gridView.setAdapter(adapter);
 
-        //Get all de la base de datos
         Cursor cursor = MainActivity.sqLiteHelper.getData("SELECT * FROM HERRAMIENTAS");
         lista.clear();
 
@@ -91,32 +90,23 @@ public class ListaHerramienta extends AppCompatActivity {
                     public void onClick(DialogInterface dialogInterface, int item) {
                         if(item==0){
                             //El actualizar
-                            //Toast.makeText(getApplicationContext(), "Actualizar..", Toast.LENGTH_SHORT).show();
-                            //Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta FROM HERRAMIENTAS");
-                            //Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta, nombre_herramienta, descripcion_herramienta, estado FROM HERRAMIENTAS");
+
                             Cursor c = MainActivity.sqLiteHelper.getData("SELECT * FROM HERRAMIENTAS");
 
                             ArrayList<Integer> arrID = new ArrayList<>();
-                            //
                             ArrayList<String> arrNom = new ArrayList<>();
                             ArrayList<String> arrDesc = new ArrayList<>();
                             ArrayList<Integer> arrEst = new ArrayList<>();
-                            //
                             ArrayList<byte[]> arrImg = new ArrayList<>();
-                            //
 
                             while(c.moveToNext()){
                                 arrID.add(c.getInt(0));
-                                //
                                 arrNom.add(c.getString(1));
                                 arrDesc.add(c.getString(2));
                                 arrImg.add(c.getBlob(3));
                                 arrEst.add(c.getInt(4));
-                                //
-
                             }
 
-                           // showDialogUpdate(ListaHerramienta.this, arrID.get(position), arrNom.get(position), arrDesc.get(position), arrEst.get(position)); //OJO
                             showDialogUpdate(ListaHerramienta.this, arrID.get(position), arrNom.get(position), arrDesc.get(position), arrEst.get(position), arrImg.get(position));
                         } else {
                             //El borrar
@@ -141,7 +131,6 @@ public class ListaHerramienta extends AppCompatActivity {
 
                 Intent herramAprestar = new Intent(ListaHerramienta.this, Alarma.class); //Cambiado en vez de HerramientaAprestar
 
-               // Cursor c = MainActivity.sqLiteHelper.getData("SELECT nombre_herramienta FROM HERRAMIENTAS");
                 Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta, nombre_herramienta FROM HERRAMIENTAS");
                 ArrayList<Integer> arrID = new ArrayList<>();
 
@@ -155,7 +144,6 @@ public class ListaHerramienta extends AppCompatActivity {
                  int idHerram = (arrID.get(position));
                 String nombreHerram = (arrNom.get(position));
 
-                //Toast.makeText(ListaHerramienta.this, "El elemento seleccionado es: " + nombreHerram , Toast.LENGTH_LONG).show();
                 Toast.makeText(ListaHerramienta.this, "El elemento seleccionado es: " + nombreHerram + " ID: " + idHerram, Toast.LENGTH_LONG).show();
                 herramAprestar.putExtra("nombre_herramienta", nombreHerram);//Probar
                 herramAprestar.putExtra("id_herramienta", idHerram);//Probar
@@ -191,26 +179,14 @@ public class ListaHerramienta extends AppCompatActivity {
         Bitmap bitmap = BitmapFactory.decodeByteArray(img_herram, 0, img_herram.length);
         imageView_herramienta.setImageBitmap(bitmap);
 
-        //Seteo width con el dialog
+
         int width = (int) (activity.getResources().getDisplayMetrics().widthPixels * 0.95); //0.95
-        //Seteo height con el dialog
+
         int height = (int) (activity.getResources().getDisplayMetrics().heightPixels * 0.7); //0.7
 
         dialog.getWindow().setLayout(width,height);
         dialog.show();
 
-       /* imageView_herramienta.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //Request para la foto de la libreria
-                ActivityCompat.requestPermissions(
-                        ListaHerramienta.this,
-                       // new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
-                        new String[]{Manifest.permission.CAMERA},
-                        PHOTO_CODE);
-                       // REQUEST_CODE_GALLERY);
-            }
-        });*/
 
         imageView_herramienta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -225,7 +201,7 @@ public class ListaHerramienta extends AppCompatActivity {
         actualizar_herramienta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                final int estado; //AgregadoUltimo
+                final int estado;
 
                 if (estado_herramienta.isChecked()){
                     estado = 1;
@@ -234,7 +210,7 @@ public class ListaHerramienta extends AppCompatActivity {
                  else {
                     estado = 0;
                      }
-                //Fin agregado ultimo
+
                 try {
 
                     MainActivity.sqLiteHelper.upgradeData(
@@ -242,7 +218,7 @@ public class ListaHerramienta extends AppCompatActivity {
                             descripcion_herramienta.getText().toString().trim(),
                             MainActivity.imageViewToByte(imageView_herramienta),
                             position,
-                            estado//Agregado
+                            estado
                     );
                     dialog.dismiss();
                     Toast.makeText(getApplicationContext(), "Actualizado correctamente..", Toast.LENGTH_SHORT).show();

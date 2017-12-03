@@ -35,8 +35,6 @@ public class MainActivity extends AppCompatActivity {
     final int REQUEST_CODE_GALLERY = 999;
     final int PHOTO_CODE = 200;
     public static SQLiteHelper sqLiteHelper;
-    //int permissionCheck2;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,7 +57,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        //Metodo que llamara a la camara
         activar_camara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -69,18 +66,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
-/*
-        activar_camara.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ActivityCompat.requestPermissions(
-                        MainActivity.this,
-                        new String[]{Manifest.permission.CAMERA},
-                        PHOTO_CODE);
-            }
-        });
 
-*/
         agregar_herramienta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -92,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                             desc_herramienta.getText().toString().trim(),
                             imageViewToByte(img_herramienta),
                             0
-                    ); //0 No esta prestado
+                    );
                     Toast.makeText(getApplicationContext(), "Agregado OK", Toast.LENGTH_SHORT).show();
                     nombre_herramienta.setText("");
                     desc_herramienta.setText("");
@@ -170,7 +156,6 @@ public class MainActivity extends AppCompatActivity {
         activar_camara = (Button) findViewById(R.id.button_camara);
         listar = (Button) findViewById(R.id.button_listar);
         agregar_herramienta = (Button) findViewById(R.id.button_agregar);
-        //permissionCheck2 = ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA);
 
     }
 

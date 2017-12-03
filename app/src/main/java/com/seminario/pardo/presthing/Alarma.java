@@ -39,16 +39,13 @@ public class Alarma extends AppCompatActivity {
     private EditText tvDisplayDate;
     private DatePicker dpResult;
     private Button btnChangeDate, btnElegirCont;
-    // fecha
     private int year;
     private int month;
     private int day;
     static final int REQUEST_SELECT_CONTACT = 1;
     static final int DATE_DIALOG_ID = 999;
-    // hora
     private int minute;
     private int hour;
-
     private TimePicker timePicker;
     private TextView textViewTime, text_idHerram;
     private int estadoActualizar;
@@ -63,8 +60,7 @@ public class Alarma extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SELECT_CONTACT && resultCode == RESULT_OK) {
             Uri contactUri = data.getData();
-            //Contacto seleccionado
-            //Nuevo Agregado
+
             String[] projection = new String[]{ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME};
             Cursor cursor = getContentResolver().query(contactUri, projection, null, null, null);
 
@@ -74,7 +70,7 @@ public class Alarma extends AppCompatActivity {
                 Toast.makeText(Alarma.this, nombreContacto, Toast.LENGTH_SHORT).show();
                 t5.setText(nombreContacto);
             }
-            //Fin Agregado
+
         }
     }
 
@@ -90,18 +86,17 @@ public class Alarma extends AppCompatActivity {
         hora = calendario.get(Calendar.HOUR_OF_DAY);
         min = calendario.get(Calendar.MINUTE);
         fecha_sistema=mes+"-"+dia+"-"+ano+" ";
-   //   fecha_sistema=dia+"-"+mes+"-"+ano+" ";
         hora_sistema = hora+":"+min;
         setCurrentDateOnView();
         addListenerOnButton();
-        // hora
+
         setCurrentTimeOnView();
         text_idHerram = (TextView) findViewById(R.id.text_idHerram);
         t3 = (EditText) findViewById(R.id.text_nomHerram);
         t5= (EditText) findViewById(R.id.text_contacto);
         t6= (EditText) findViewById(R.id.text_fecha);
         t7= (EditText) findViewById(R.id.text_hora);
-        //Recupero datos de ListaHerramienta
+
         Intent intent = getIntent();
         Bundle datos = intent.getExtras();
 
@@ -112,7 +107,7 @@ public class Alarma extends AppCompatActivity {
             text_idHerram.setText(id);
             t3.setText(nombreHerram);
         }
-        //Inicio el servicio
+
         servicio();
         btnElegirCont = (Button) findViewById(R.id.button_elegirCont);
         btnElegirCont.setOnClickListener(new View.OnClickListener() {
@@ -147,9 +142,9 @@ public class Alarma extends AppCompatActivity {
         registro.put("hora", t7.getText().toString());
         bd.insert("alarma", null, registro);//nombre de la tabla
         bd.close();
-        //Llamo al metodo de crear evento
+
         addEvent();
-        //
+
         t3.setText("");
         t5.setText("");
         t6.setText("");
@@ -160,17 +155,17 @@ public class Alarma extends AppCompatActivity {
 
         Toast.makeText(this, "Alarma registrada", Toast.LENGTH_LONG).show();
     }
-    //Agregado para crear evento
+
     public void addEvent() {
         try {
             Calendar c = Calendar.getInstance();
 
-            c.set(Calendar.YEAR, year);//año
-            c.set(Calendar.MONTH, month);//mes
-            c.set(Calendar.DAY_OF_MONTH, day);//dia
+            c.set(Calendar.YEAR, year);
+            c.set(Calendar.MONTH, month);
+            c.set(Calendar.DAY_OF_MONTH, day);
 
-            c.set(Calendar.HOUR_OF_DAY, hour); //hora
-            c.set(Calendar.MINUTE, minute);//min
+            c.set(Calendar.HOUR_OF_DAY, hour);
+            c.set(Calendar.MINUTE, minute);
 
             Intent intent = new Intent(Intent.ACTION_INSERT)
                     .setType("vnd.android.cursor.dir/event")
@@ -187,7 +182,7 @@ public class Alarma extends AppCompatActivity {
             Log.i(e.getMessage(),"Referencia");
         }
     }
-    //FIN Agregado de evento
+
     public void setCurrentTimeOnView() {
 
         textViewTime = (EditText) findViewById(R.id.text_hora);
@@ -238,13 +233,13 @@ public class Alarma extends AppCompatActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        // Ingreso el dia de hoy en el text
+
         tvDisplayDate.setText(new StringBuilder()
-                // El mes está basado en 0, solo sumo 1
+
                 .append(month + 1).append("-").append(day).append("-")
                 .append(year).append(" "));
 
-        // Ingreso el dia de hot en datepicker
+
         dpResult.init(year, month, day, null);
 
     }
@@ -295,12 +290,12 @@ public class Alarma extends AppCompatActivity {
             month = selectedMonth;
             day = selectedDay;
 
-            // La fecha seleccionada la seteo
+
             tvDisplayDate.setText(new StringBuilder().append(month + 1)
                     .append("-").append(day).append("-").append(year)
                     .append(" "));
 
-            // Tambien en el datepicker
+
             dpResult.init(year, month, day, null);
 
         }

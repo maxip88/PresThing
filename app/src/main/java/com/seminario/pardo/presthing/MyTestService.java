@@ -15,7 +15,6 @@ public class MyTestService extends IntentService {
 
     @Override
     protected void onHandleIntent(Intent intent) {
-        //Do the task here
         Log.i("MyTestService", "Servicio ejecutandose. Recordatorios");
     }
 }

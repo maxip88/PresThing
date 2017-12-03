@@ -44,7 +44,6 @@ public class MyAlarmReceiver extends BroadcastReceiver {
         hora = calendario.get(Calendar.HOUR_OF_DAY);
         min = calendario.get(Calendar.MINUTE);
         fecha_sistema=mes+"-"+dia+"-"+ano+" ";
-      //    fecha_sistema=dia+"-"+mes+"-"+ano+" ";
         hora_sistema=hora+":"+min;
         admin = new AdminSQLiteOpenHelper(context, Vars.bd, null, Vars.version);
         bd = admin.getWritableDatabase();
@@ -76,10 +75,10 @@ public class MyAlarmReceiver extends BroadcastReceiver {
                 .setContentTitle("")
                 .setContentText(t)
                 .setContentInfo("Info")
-                .setContentIntent(contentIntent)//Ver si anda
+                .setContentIntent(contentIntent)
                 .setLargeIcon(BitmapFactory.decodeResource(contexto.getResources(), R.drawable.ic_notificacion))
                 .setSmallIcon(R.drawable.ic_notificacion)
-                .setAutoCancel(true) //Cuando se pulsa la notificación ésta desaparece
+                .setAutoCancel(true)
                 .setSound(defaultSound)
                 .setVibrate(pattern);
 

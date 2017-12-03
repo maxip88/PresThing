@@ -22,7 +22,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         database.execSQL(sql);
     }
 
-    //TABLA DE HERRAMIENTAS
 
     public void insertData(String nombre_herramienta, String descripcion_herramienta, byte [] image, int estado){
 
@@ -35,7 +34,7 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.bindString(1, nombre_herramienta);
         statement.bindString(2, descripcion_herramienta);
         statement.bindBlob(3, image);
-        statement.bindDouble(4, (double) estado); //Agregado
+        statement.bindDouble(4, (double) estado);
         statement.executeInsert();
 
     }
@@ -50,9 +49,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         statement.bindString(1, nombre_herramienta);
         statement.bindString(2, descripcion_herramienta);
         statement.bindBlob(3, image);
-        statement.bindDouble(4, (double) estado_herramienta); //Agregado
+        statement.bindDouble(4, (double) estado_herramienta);
         statement.bindDouble(5, (double)id_herramienta);
-
 
         statement.execute();
         database.close();
@@ -89,7 +87,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 
     }
 
-    //TABLA DE PRESTAMOS
 
     public void upgradeEstado(int id_herramienta){
 
