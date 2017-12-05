@@ -125,8 +125,8 @@ public class Alarma extends AppCompatActivity {
     public void servicio() {
         Intent intent = new Intent(getApplicationContext(), MyAlarmReceiver.class);
         final PendingIntent pIntent = PendingIntent.getBroadcast(this, MyAlarmReceiver.REQUEST_CODE, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-        long firstMillis = System.currentTimeMillis(); //arranca la aplicacion
-        int intervalMillis = 1 * 3 * 1000; //3 segundos
+        long firstMillis = System.currentTimeMillis();
+        int intervalMillis = 1 * 3 * 1000;
         AlarmManager alarm = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
         alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, firstMillis, intervalMillis, pIntent);
     }
@@ -137,10 +137,10 @@ public class Alarma extends AppCompatActivity {
         bd = admin.getWritableDatabase();
         registro = new ContentValues();
         registro.put("encabezado", t3.getText().toString());
-        registro.put("mensaje", t5.getText().toString());//nombre del campo
+        registro.put("mensaje", t5.getText().toString());
         registro.put("fecha", t6.getText().toString());
         registro.put("hora", t7.getText().toString());
-        bd.insert("alarma", null, registro);//nombre de la tabla
+        bd.insert("alarma", null, registro);
         bd.close();
 
         addEvent();
