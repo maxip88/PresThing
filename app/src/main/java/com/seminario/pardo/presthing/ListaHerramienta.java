@@ -143,8 +143,8 @@ public class ListaHerramienta extends AppCompatActivity {
                 String nombreHerram = (arrNom.get(position));
 
                 Toast.makeText(ListaHerramienta.this, "El elemento seleccionado es: " + nombreHerram + " ID: " + idHerram, Toast.LENGTH_LONG).show();
-                herramAprestar.putExtra("nombre_herramienta", nombreHerram);//Probar
-                herramAprestar.putExtra("id_herramienta", idHerram);//Probar
+                herramAprestar.putExtra("nombre_herramienta", nombreHerram);
+                herramAprestar.putExtra("id_herramienta", idHerram);
 
                 startActivity(herramAprestar);
             }
@@ -154,7 +154,7 @@ public class ListaHerramienta extends AppCompatActivity {
 
 
     ImageView imageView_herramienta;
-    private void showDialogUpdate(Activity activity, final int position, final String nomHerr, final String descHerr, final int estado_herram, byte[] img_herram){ //Le saque el final
+    private void showDialogUpdate(Activity activity, final int position, final String nomHerr, final String descHerr, final int estado_herram, byte[] img_herram){
 
         final Dialog dialog = new Dialog(activity);
         dialog.setContentView(R.layout.update_herramienta_activity);
@@ -163,7 +163,7 @@ public class ListaHerramienta extends AppCompatActivity {
         imageView_herramienta = (ImageView) dialog.findViewById(R.id.imageView_herramienta);
         final EditText nombre_herramienta = (EditText) dialog.findViewById(R.id.nombre_herramienta);
         final EditText descripcion_herramienta = (EditText) dialog.findViewById(R.id.descripcion_herramienta);
-        final CheckBox estado_herramienta = (CheckBox) dialog.findViewById(R.id.estado_herramienta); //Agregado
+        final CheckBox estado_herramienta = (CheckBox) dialog.findViewById(R.id.estado_herramienta);
         Button actualizar_herramienta = (Button) dialog.findViewById(R.id.button_actualizar);
 
         nombre_herramienta.setText(nomHerr);
@@ -178,9 +178,9 @@ public class ListaHerramienta extends AppCompatActivity {
         imageView_herramienta.setImageBitmap(bitmap);
 
 
-        int width = (int) (activity.getResources().getDisplayMetrics().widthPixels * 0.95); //0.95
+        int width = (int) (activity.getResources().getDisplayMetrics().widthPixels * 0.95);
 
-        int height = (int) (activity.getResources().getDisplayMetrics().heightPixels * 0.7); //0.7
+        int height = (int) (activity.getResources().getDisplayMetrics().heightPixels * 0.7);
 
         dialog.getWindow().setLayout(width,height);
         dialog.show();
