@@ -127,7 +127,7 @@ public class ListaHerramienta extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, final int position, long l) {
 
-                Intent herramAprestar = new Intent(ListaHerramienta.this, Alarma.class); //Cambiado en vez de HerramientaAprestar
+                Intent herramAprestar = new Intent(ListaHerramienta.this, Alarma.class);
 
                 Cursor c = MainActivity.sqLiteHelper.getData("SELECT id_herramienta, nombre_herramienta FROM HERRAMIENTAS");
                 ArrayList<Integer> arrID = new ArrayList<>();
